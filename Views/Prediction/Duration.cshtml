@@ -1,0 +1,60 @@
+﻿@model Vladutescu_Medeia_Lab4.DurationPredictionModel.ModelInput
+@{
+    ViewData["Title"] = "Duration Prediction Using ML.NET";
+}
+
+<h2>Duration Prediction using ML.NET</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Duration">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Passenger_count" class="control-label"></label>
+                <input asp-for="Passenger_count" type="number" class="form-control" />
+                <span asp-validation-for="Passenger_count" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Trip_distance" class="control-label"></label>
+                <input asp-for="Trip_distance" class="form-control" />
+                <span asp-validation-for="Trip_distance" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Payment_type" class="control-label"></label>
+                <select asp-for="Payment_type" class="form-control">
+                    <option value="CSH">Cash</option>
+                    <option value="CRD">Credit</option>
+                </select>
+                <span asp-validation-for="Payment_type" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="margin-top: 10px;">
+                <input type="submit" value="Estimate Duration" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-offset-2 col-md-4">
+        @if (ViewBag.Duration != null)
+        {
+            <div class="card" style="padding: 20px; background-color: #f8f9fa;">
+                <h1 class="text-success">Result</h1>
+                <h2>Estimated Duration: @Math.Round((double)ViewBag.Duration, 2) seconds</h2>
+                <p><em>Approximately @Math.Round((double)ViewBag.Duration / 60, 1) minutes</em></p>
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Price">Back to Price Prediction</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
